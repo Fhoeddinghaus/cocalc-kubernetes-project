@@ -1,3 +1,8 @@
+This is a fork from [sagemathinc/cocalc-kubernetes](https://github.com/sagemathinc/cocalc-kubernetes) that adds the Julia kernel to the project-image.
+This image may be used later by the CIP-staff at THP (Institute for theoretical physics) of the university cologne (UzK).
+
+<hr>
+
 # cocalc-kubernetes
 
 This is a free open source AGPL licensed slightly modified version of [cocalc-docker](https://github.com/sagemathinc/cocalc-docker), but for running CoCalc on a Kubernetes cluster.  There is one pod for the server and one pod for each project.
