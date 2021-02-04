@@ -46,5 +46,6 @@ spec:
       serviceAccountName: cocalc-kubernetes-server
       terminationGracePeriodSeconds: 15
       volumes:
-      - emptyDir: {}
-        name: projects
+      - name: projects
+        persistentVolumeClaim:
+          claimName: cocalc-pvc
