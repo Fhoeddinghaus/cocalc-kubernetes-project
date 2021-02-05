@@ -165,11 +165,19 @@ RUN cd /tmp \
 #Pkg.add("IJulia");' | julia \
 # && mv -i "$HOME/.local/share/jupyter/kernels/julia-0.6" "/usr/local/share/jupyter/kernels/"
 
+
+## Include to fix IRKernel install
+RUN \
+  apt-get -y build-dep libcurl4-gnutls-dev \
+  && apt-get -y install libcurl4-gnutls-dev \
+  && apt-get clean && apt-get -y autoremove
+
+
 # Install R Jupyter Kernel package into R itself (so R kernel works).
 # I can't get this to work ?!
 # RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | sage -R --no-save
 ## Included to fix "ERROR: dependency ‘pbdZMQ’ is not available for package ‘IRkernel’"
-RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); library('devtools'); install_github('IRkernel/repr'); install_github('IRkernel/IRdisplay'); install_github('IRkernel/IRkernel')" | R --no-save
+RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); install.packages("devtools", dependencies = TRUE); library('devtools'); install_github('IRkernel/repr'); install_github('IRkernel/IRdisplay'); install_github('IRkernel/IRkernel')" | R --no-save
 #RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | R --no-save
 
 # Get the source code of cocalc, putting it at /cocalc
