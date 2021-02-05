@@ -124,8 +124,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
 COPY scripts/ /tmp/scripts
 RUN chmod -R +x /tmp/scripts
 
-RUN    adduser --quiet --shell /bin/bash --gecos "Sage user,101,," --disabled-password sage \
-    && chown -R sage:sage /home/sage/
+## Exclude Sage
+##RUN    adduser --quiet --shell /bin/bash --gecos "Sage user,101,," --disabled-password sage \
+##    && chown -R sage:sage /home/sage/
 
 # make source checkout target, then run the install script
 # see https://github.com/docker/docker/issues/9547 for the sync
@@ -133,18 +134,19 @@ RUN    adduser --quiet --shell /bin/bash --gecos "Sage user,101,," --disabled-pa
 # Here -E inherits the environment from root, however it's important to
 # include -H to set HOME=/home/sage, otherwise DOT_SAGE will not be set
 # correctly and the build will fail!
-RUN    mkdir -p /usr/local/sage \
-    && chown -R sage:sage /usr/local/sage \
-    && sudo -H -E -u sage /tmp/scripts/install_sage.sh /usr/local/ master \
-    && sync
+## Exclude Sage
+##RUN    mkdir -p /usr/local/sage \
+##    && chown -R sage:sage /usr/local/sage \
+##    && sudo -H -E -u sage /tmp/scripts/install_sage.sh /usr/local/ master \
+##    && sync
 
-RUN /tmp/scripts/post_install_sage.sh /usr/local/ && rm -rf /tmp/* && sync
+##RUN /tmp/scripts/post_install_sage.sh /usr/local/ && rm -rf /tmp/* && sync
 
 # Install SageTex
-RUN \
-     sudo -H -E -u sage sage -p sagetex \
-  && cp -rv /usr/local/sage/local/share/texmf/tex/latex/sagetex/ /usr/share/texmf/tex/latex/ \
-  && texhash
+##RUN \
+##     sudo -H -E -u sage sage -p sagetex \
+##  && cp -rv /usr/local/sage/local/share/texmf/tex/latex/sagetex/ /usr/share/texmf/tex/latex/ \
+##  && texhash
   
 # Install Julia
 ARG JULIA=1.5.0
@@ -213,12 +215,14 @@ COPY kucalc-start-sshd.sh /cocalc/kucalc-start-sshd.sh
 COPY smc-sage-server /cocalc/bin/smc-sage-server
 
 # Install support code for forking sage server
-RUN umask 022 \
-  && sage -pip install /cocalc/src/smc_sagews/
+## Exclude Sage
+##RUN umask 022 \
+##  && sage -pip install /cocalc/src/smc_sagews/
 
 # The official Jupyter kernel with sage-9.0 (at least) is completely broken, due
 # to calling the wrong script.  No clue what that's about. This works though:
-COPY kernels/sagemath /usr/local/share/jupyter/kernels/sagemath
+## Exclude Sage
+##COPY kernels/sagemath /usr/local/share/jupyter/kernels/sagemath
 
 ## Latest verison of JupyterLab and Jupyter Notebook classic
 RUN umask 022 \
