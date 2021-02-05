@@ -169,7 +169,8 @@ RUN cd /tmp \
 # I can't get this to work ?!
 # RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | sage -R --no-save
 ## Included to fix "ERROR: dependency ‘pbdZMQ’ is not available for package ‘IRkernel’"
-RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | R --no-save
+RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); library('devtools'); install_github('IRkernel/repr'); install_github('IRkernel/IRdisplay'); install_github('IRkernel/IRkernel')" | R --no-save
+#RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | R --no-save
 
 # Get the source code of cocalc, putting it at /cocalc
 RUN umask 022 && git clone https://github.com/sagemathinc/cocalc.git
