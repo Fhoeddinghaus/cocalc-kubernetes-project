@@ -168,7 +168,7 @@ RUN cd /tmp \
 
 ## Include to fix IRKernel install
 RUN \
-  apt-get -y install libcurl4-gnutls-dev \
+  apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev \
   && apt-get clean && apt-get -y autoremove
 #  apt-get -y build-dep libcurl4-gnutls-dev \
 #  && apt-get -y install libcurl4-gnutls-dev \
