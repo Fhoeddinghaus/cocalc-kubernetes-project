@@ -166,10 +166,10 @@ RUN cd /tmp \
 # && mv -i "$HOME/.local/share/jupyter/kernels/julia-0.6" "/usr/local/share/jupyter/kernels/"
 
 
-## Include to fix IRKernel install
-RUN \
-  apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev \
-  && apt-get clean && apt-get -y autoremove
+## Exclude IRKernel
+#RUN \
+#  apt-get -y install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev \
+#  && apt-get clean && apt-get -y autoremove
 #  apt-get -y build-dep libcurl4-gnutls-dev \
 #  && apt-get -y install libcurl4-gnutls-dev \
 #  && apt-get clean && apt-get -y autoremove
@@ -179,7 +179,7 @@ RUN \
 # I can't get this to work ?!
 # RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | sage -R --no-save
 ## Included to fix "ERROR: dependency ‘pbdZMQ’ is not available for package ‘IRkernel’"
-RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); install.packages("devtools", dependencies = TRUE); library('devtools'); install_github('IRkernel/repr'); install_github('IRkernel/IRdisplay'); install_github('IRkernel/IRkernel')" | R --no-save
+## RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); install.packages("devtools", dependencies = TRUE); library('devtools'); install_github('IRkernel/repr'); install_github('IRkernel/IRdisplay'); install_github('IRkernel/IRkernel')" | R --no-save
 #RUN echo "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'httr', 'uuid', 'digest'), repos='http://cran.us.r-project.org'); devtools::install_github('IRkernel/IRkernel')" | R --no-save
 
 # Get the source code of cocalc, putting it at /cocalc
@@ -240,8 +240,9 @@ COPY smc-sage-server /cocalc/bin/smc-sage-server
 RUN umask 022 \
   && pip3 install jupyterlab jupyter
 
-RUN umask 022 \
-  && echo "install.packages('IRkernel'); IRkernel::installspec(user = FALSE)" | R --no-save
+## Exclude IRKernel
+#RUN umask 022 \
+#  && echo "install.packages('IRkernel'); IRkernel::installspec(user = FALSE)" | R --no-save
 
 # Install the bash kernel
 RUN umask 022 \
@@ -262,11 +263,13 @@ RUN \
   && echo "/cocalc/lib/python2.7/site-packages" > /usr/local/lib/python2.7/dist-packages/cocalc.pth \
   && chmod ugo=r /usr/local/lib/python2.7/dist-packages/cocalc.pth
 
-RUN umask 022 \
-  && echo "install.packages('rmarkdown');" | R --no-save
+## Exclude RKernel
+#RUN umask 022 \
+#  && echo "install.packages('rmarkdown');" | R --no-save
 
-RUN umask 022 \
-  && echo "install.packages('knitr');" | R --no-save
+## Exclude RKernel
+#RUN umask 022 \
+#  && echo "install.packages('knitr');" | R --no-save
 
 # Switch to being the non-privileged user.
 USER user
