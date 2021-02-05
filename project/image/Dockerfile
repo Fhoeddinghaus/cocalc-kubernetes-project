@@ -168,9 +168,11 @@ RUN cd /tmp \
 
 ## Include to fix IRKernel install
 RUN \
-  apt-get -y build-dep libcurl4-gnutls-dev \
-  && apt-get -y install libcurl4-gnutls-dev \
+  apt-get -y install libcurl4-gnutls-dev \
   && apt-get clean && apt-get -y autoremove
+#  apt-get -y build-dep libcurl4-gnutls-dev \
+#  && apt-get -y install libcurl4-gnutls-dev \
+#  && apt-get clean && apt-get -y autoremove
 
 
 # Install R Jupyter Kernel package into R itself (so R kernel works).
