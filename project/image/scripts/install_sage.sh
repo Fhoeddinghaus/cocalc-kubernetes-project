@@ -27,7 +27,7 @@ git clone --depth 1 --branch ${BRANCH} https://github.com/sagemath/sage.git
 cd sage
 
 # This may fail: https://trac.sagemath.org/ticket/23519
-./configure
+make configure
 make || true
 # Because of "stupid" static GMP's get left around that break the build.
 # So we try again with the static GMP's removed.
