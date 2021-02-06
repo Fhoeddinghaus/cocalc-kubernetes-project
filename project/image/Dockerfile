@@ -1,5 +1,7 @@
 FROM sagemathinc/cocalc-kubernetes-project
 
+USER root
+
 # Preparing Julia installation for later build
 
 # Install Julia
@@ -18,3 +20,12 @@ RUN cd /tmp \
 #Pkg.init(); \
 #Pkg.add("IJulia");' | julia \
 # && mv -i "$HOME/.local/share/jupyter/kernels/julia-0.6" "/usr/local/share/jupyter/kernels/"
+
+USER user
+
+WORKDIR /home/user
+
+EXPOSE 2222 6000 6001
+
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
+#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
