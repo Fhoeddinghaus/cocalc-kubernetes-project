@@ -1,6 +1,6 @@
 FROM sagemathinc/cocalc-kubernetes-project
 
-# Preparing Julia installation for later build
+# Preparing Julia installation for later build 
 
 # Install Julia
 ARG JULIA=1.5.0
