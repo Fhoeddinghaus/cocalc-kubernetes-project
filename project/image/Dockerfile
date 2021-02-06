@@ -14,6 +14,9 @@ RUN cd /tmp \
   && ln -s /opt/julia/bin/julia /usr/local/bin
   
 # Install IJulia kernel
+RUN echo 'using Pkg; Pkg.add("IJulia");' | julia \
+  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
+
 #RUN echo '\
 #ENV["JUPYTER"] = "/usr/local/bin/jupyter"; \
 #ENV["JULIA_PKGDIR"] = "/opt/julia/share/julia/site"; \
