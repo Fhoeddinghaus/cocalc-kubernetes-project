@@ -239,6 +239,10 @@ COPY smc-sage-server /cocalc/bin/smc-sage-server
 ## Latest verison of JupyterLab and Jupyter Notebook classic
 RUN umask 022 \
   && pip3 install jupyterlab jupyter
+  
+## Included to update jupyter_client
+RUN umask 022 \
+  && pip3 install --upgrade jupyter_client
 
 ## Exclude IRKernel
 #RUN umask 022 \
