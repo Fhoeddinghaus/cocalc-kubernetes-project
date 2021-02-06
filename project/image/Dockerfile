@@ -14,8 +14,8 @@ RUN cd /tmp \
   && ln -s /opt/julia/bin/julia /usr/local/bin
   
 # Install IJulia kernel
-RUN echo 'using Pkg; Pkg.add("IJulia");' | julia \
-  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
+RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
+#  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 
 #RUN echo '\
 #ENV["JUPYTER"] = "/usr/local/bin/jupyter"; \
@@ -33,4 +33,4 @@ EXPOSE 2222 6000 6001
 ENTRYPOINT ["/cocalc/bin/tini", "--"]
 CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 
-RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
+#RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
