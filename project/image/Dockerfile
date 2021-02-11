@@ -23,8 +23,8 @@ RUN echo '\
   using Pkg; \
   Pkg.add("IJulia");' | julia \
   && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
-  && (mkdir "/home/user/.julia" || true) \
-  && mv -i "$HOME/.julia/packages" "/home/user/.julia/" \
+  && (mkdir "/usr/local/share/.julia" || true) \
+  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" \
   && echo '{\
   "display_name": "Julia 1.5.0",\
   "argv": [\
@@ -32,7 +32,7 @@ RUN echo '\
     "-i",\
     "--color=yes",\
     "--project=@.",\
-    "/home/user/.julia/packages/IJulia/IDNmS/src/kernel.jl",\
+    "/usr/local/share/.julia/packages/IJulia/IDNmS/src/kernel.jl",\
     "{connection_file}"\
   ],\
   "language": "julia",\
