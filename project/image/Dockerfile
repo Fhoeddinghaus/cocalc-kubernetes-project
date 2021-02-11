@@ -22,7 +22,23 @@ RUN echo '\
   ENV["JULIA_PKGDIR"] = "/opt/julia/share/julia/site"; \
   using Pkg; \
   Pkg.add("IJulia");' | julia \
-  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
+  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
+  && (mkdir "$HOME/.julia" || true) \
+  && mv -i "/root/.julia/packages" "$HOME/.julia/" \
+  && echo '{\
+  "display_name": "Julia 1.5.0",\
+  "argv": [\
+    "/opt/julia/bin/julia",\
+    "-i",\
+    "--color=yes",\
+    "--project=@.",\
+    "/home/user/.julia/packages/IJulia/IDNmS/src/kernel.jl",\
+    "{connection_file}"\
+  ],\
+  "language": "julia",\
+  "env": {},\
+  "interrupt_mode": "signal"\
+}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 #Pkg.init(); \
 
 USER user
