@@ -17,18 +17,19 @@ RUN cd /tmp \
 #RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
 #  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 
-#RUN echo '\
-#ENV["JUPYTER"] = "/usr/local/bin/jupyter"; \
-#ENV["JULIA_PKGDIR"] = "/opt/julia/share/julia/site"; \
+RUN echo '\
+  ENV["JUPYTER"] = "/usr/local/bin/jupyter"; \
+  ENV["JULIA_PKGDIR"] = "/opt/julia/share/julia/site"; \
+  using Pkg; \
+  Pkg.add("IJulia");' | julia \
+  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 #Pkg.init(); \
-#Pkg.add("IJulia");' | julia \
-# && mv -i "$HOME/.local/share/jupyter/kernels/julia-0.6" "/usr/local/share/jupyter/kernels/"
 
 USER user
 
 WORKDIR /home/user
 
-RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
+#RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
 
 EXPOSE 2222 6000 6001
 
