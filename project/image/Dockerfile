@@ -43,6 +43,11 @@ RUN \
 }' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 #Pkg.init(); \
 
+# Change permissions and ownership
+RUN \
+     chown -R user /usr/local/share/.julia \
+  && chmod -R 755 /usr/local/share/.julia
+
 USER user
 
 WORKDIR /home/user
