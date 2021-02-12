@@ -17,7 +17,9 @@ RUN cd /tmp \
 #RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
 #  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 
-RUN echo '\
+RUN \
+     umask 022 \
+  && echo '\
   ENV["JUPYTER"] = "/usr/local/bin/jupyter"; \
   ENV["JULIA_PKGDIR"] = "/opt/julia/share/julia/site"; \
   using Pkg; \
