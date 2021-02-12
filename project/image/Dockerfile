@@ -22,7 +22,7 @@ RUN \
      umask 022 \
   && echo '\
   ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-  ENV["JULIA_PKGDIR"] = "$HOME/.julia/packages" \ 
+  ENV["JULIA_PKGDIR"] = "/root/.julia/packages"; \ 
   using Pkg; \
   Pkg.add("IJulia");' | julia \
   && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
