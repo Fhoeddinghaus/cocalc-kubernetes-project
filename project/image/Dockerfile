@@ -45,9 +45,9 @@ RUN cd /tmp \
 #Pkg.init(); \
 
 # Change permissions and ownership
-RUN \
-     chown -R user:user /usr/local/share/.julia \
-  && chmod -R 755 /usr/local/share/.julia
+#RUN \
+#     chown -R user:user /usr/local/share/.julia \
+#  && chmod -R 755 /usr/local/share/.julia
 
 USER user
 
