@@ -64,7 +64,8 @@ RUN \
   ENV["JUPYTER"] = "/usr/bin/jupyter"; \
   ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
   using Pkg; \
-  Pkg.add("IJulia");' | julia \
-  && mv -i "/home/user/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
+  Pkg.add("IJulia");' | julia 
+  #\
+  #&& mv -i "/home/user/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 
 
