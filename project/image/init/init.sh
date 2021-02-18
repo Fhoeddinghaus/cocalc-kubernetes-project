@@ -108,7 +108,7 @@ fi
 # and exec replaces the current process
 # the local hub then cleans up some paths from the environment, such that subprocesses aren't affected
 date -Ins
-. /cocalc/nvm/nvm.sh --no-use
+#. /cocalc/nvm/nvm.sh --no-use
 # 10 below is to select node version 10
 nvm use --delete-prefix 10
 date -Ins
