@@ -49,23 +49,16 @@ RUN cd /tmp \
 #     chown -R user:user /usr/local/share/.julia \
 #  && chmod -R 755 /usr/local/share/.julia
 
+# Use own init script
+COPY init /cocalc/init/
+
 USER user
 
 WORKDIR /home/user
 
 EXPOSE 2222 6000 6001
 
-#ENTRYPOINT ["/cocalc/bin/tini", "--"]
-#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
-
-RUN \
-     umask 022 \
-  && echo '\
-  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
-  using Pkg; \
-  Pkg.add("IJulia");' | julia 
-  #\
-  #&& mv -i "/home/user/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
+CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 
 
