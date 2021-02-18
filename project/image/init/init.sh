@@ -45,7 +45,7 @@ export LANGUAGE="en_US:en"
 export _JAVA_OPTIONS="-Djava.io.tmpdir=$HOME/tmp -Xms64m"
 export NLTK_DATA="$EXT/data/nltk_data"
 export ISOCHRONES="$EXT/data/isochrones"
-export JUPYTER_PATH="$EXT/jupyter"
+export JUPYTER_PATH="/usr/bin/jupyter"
 export JULIA_DEPOT_PATH="$HOME/.julia:$EXT/julia/depot/"
 export ANACONDA3="$EXT/anaconda3"
 export ANACONDA5="$EXT/anaconda5"
@@ -85,6 +85,16 @@ fi
 # Make the ephemeral directory where status, temporary config, and log
 # files about the local hub and other daemons are stored.
 rm -rf "$SMC" && mkdir "$SMC"
+
+# Create .julia folder
+mkdir "$HOME/.julia"
+
+# install IJulia
+echo '\
+  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
+  using Pkg; \
+  Pkg.add("IJulia");' | julia
 
 bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 disown
