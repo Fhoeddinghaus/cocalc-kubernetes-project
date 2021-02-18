@@ -110,8 +110,8 @@ fi
 date -Ins
 #. /cocalc/nvm/nvm.sh --no-use
 # 10 below is to select node version 10
-nvm use --delete-prefix 10
-date -Ins
+#nvm use --delete-prefix 10
+#date -Ins
 exec node /cocalc/src/smc-project/local_hub.js --tcp_port 6000 --raw_port 6001
 
 
