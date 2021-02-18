@@ -87,7 +87,7 @@ fi
 rm -rf "$SMC" && mkdir "$SMC"
 
 # Create .julia folder
-mkdir "$HOME/.julia"
+mkdir "$HOME/.julia" || true
 
 # install IJulia
 echo '\
