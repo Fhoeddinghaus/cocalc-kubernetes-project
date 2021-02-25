@@ -47,7 +47,7 @@ RUN cd /tmp \
 # Change permissions and ownership
 #RUN \
 #     chown -R user:user /usr/local/share/.julia \
-#  && chmod -R 755 /usr/local/share/.julia
+#  && chmod -R 755 /usr/local/share/.julia 
 
 # Use own init script
 COPY init /cocalc/init/
