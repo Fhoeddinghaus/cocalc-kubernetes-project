@@ -27,22 +27,21 @@ RUN \
   Pkg.add("IJulia");' | julia \
   && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
   && (mkdir "/usr/local/share/.julia" || true) \
-  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" 
-#\
-#  && echo '{\
-#  "display_name": "Julia 1.5.0",\
-#  "argv": [\
-#    "/opt/julia/bin/julia",\
-#    "-i",\
-#    "--color=yes",\
-#    "--project=@.",\
-#    "/usr/local/share/.julia/packages/IJulia/IDNmS/src/kernel.jl",\
-#    "{connection_file}"\
-#  ],\
-#  "language": "julia",\
-#  "env": {},\
-#  "interrupt_mode": "signal"\
-#}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
+  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" \
+  && echo '{\
+  "display_name": "Julia 1.5.0",\
+  "argv": [\
+    "/opt/julia/bin/julia",\
+    "-i",\
+    "--color=yes",\
+    "--project=@.",\
+    "/usr/local/share/.julia/packages/IJulia/*/src/kernel.jl",\
+    "{connection_file}"\
+  ],\
+  "language": "julia",\
+  "env": {},\
+  "interrupt_mode": "signal"\
+}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 #Pkg.init(); \
 
 # Change permissions and ownership
