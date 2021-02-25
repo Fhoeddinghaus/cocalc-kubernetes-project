@@ -35,7 +35,7 @@ RUN \
     "-i",\
     "--color=yes",\
     "--project=@.",\
-    "/usr/local/share/.julia/packages/IJulia/*/src/kernel.jl",\
+    "/home/user/.julia/packages/IJulia/*/src/kernel.jl",\
     "{connection_file}"\
   ],\
   "language": "julia",\
