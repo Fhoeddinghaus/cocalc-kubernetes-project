@@ -87,14 +87,14 @@ fi
 rm -rf "$SMC" && mkdir "$SMC"
 
 # Create .julia folder
-mkdir "$HOME/.julia" || true
+#mkdir "$HOME/.julia" || true
 
 # install IJulia
-echo '\
-  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
-  using Pkg; \
-  Pkg.add("IJulia");' | julia
+#echo '\
+#  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+#  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
+#  using Pkg; \
+#  Pkg.add("IJulia");' | julia
 
 bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 disown
