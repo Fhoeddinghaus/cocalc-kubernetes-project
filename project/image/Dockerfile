@@ -18,30 +18,30 @@ RUN cd /tmp \
 #  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 #"/opt/julia/share/julia/site"; \
 
-RUN \
-     umask 022 \
-  && echo '\
-  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-  ENV["JULIA_PKGDIR"] = "/root/.julia/packages"; \ 
-  using Pkg; \
-  Pkg.add("IJulia");' | julia \
-  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
-  && (mkdir "/usr/local/share/.julia" || true) \
-  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" \
-  && echo '{\
-  "display_name": "Julia 1.5.0",\
-  "argv": [\
-    "/opt/julia/bin/julia",\
-    "-i",\
-    "--color=yes",\
-    "--project=@.",\
-    "/home/user/.julia/packages/IJulia/*/src/kernel.jl",\
-    "{connection_file}"\
-  ],\
-  "language": "julia",\
-  "env": {},\
-  "interrupt_mode": "signal"\
-}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
+#RUN \
+#     umask 022 \
+#  && echo '\
+#  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+#  ENV["JULIA_PKGDIR"] = "/root/.julia/packages"; \ 
+#  using Pkg; \
+#  Pkg.add("IJulia");' | julia \
+#  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
+#  && (mkdir "/usr/local/share/.julia" || true) \
+#  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" \
+#  && echo '{\
+#  "display_name": "Julia 1.5.0",\
+#  "argv": [\
+#    "/opt/julia/bin/julia",\
+#    "-i",\
+#    "--color=yes",\
+#    "--project=@.",\
+#    "/home/user/.julia/packages/IJulia/*/src/kernel.jl",\
+#    "{connection_file}"\
+#  ],\
+#  "language": "julia",\
+#  "env": {},\
+#  "interrupt_mode": "signal"\
+#}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 #Pkg.init(); \
 
 # Change permissions and ownership
@@ -58,7 +58,7 @@ WORKDIR /home/user
 
 EXPOSE 2222 6000 6001
 
-#ENTRYPOINT ["/cocalc/bin/tini", "--"]
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
 CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 
 
