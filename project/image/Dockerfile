@@ -18,16 +18,17 @@ RUN cd /tmp \
 #  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
 #"/opt/julia/share/julia/site"; \
 
-#RUN \
-#     umask 022 \
-#  && echo '\
-#  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-#  ENV["JULIA_PKGDIR"] = "/root/.julia/packages"; \ 
-#  using Pkg; \
-#  Pkg.add("IJulia");' | julia \
-#  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
-#  && (mkdir "/usr/local/share/.julia" || true) \
-#  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" \
+RUN \
+     umask 022 \
+  && echo '\
+  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+  ENV["JULIA_PKGDIR"] = "/root/.julia/packages"; \ 
+  using Pkg; \
+  Pkg.add("IJulia");' | julia \
+  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
+  && (mkdir "/usr/local/share/.julia" || true) \
+  && mv -i "$HOME/.julia/packages" "/usr/local/share/.julia/" 
+#\
 #  && echo '{\
 #  "display_name": "Julia 1.5.0",\
 #  "argv": [\
