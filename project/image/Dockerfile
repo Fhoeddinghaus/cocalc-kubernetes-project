@@ -81,7 +81,21 @@ RUN \
 #  "interrupt_mode": "signal"\
 #}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 
-ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+#ENTRYPOINT ["/cocalc/bin/tini", "--"]
+#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+# Start sh in new environment with tini
+RUN /cocalc/bin/tini -- env -i sh
+# Install IJulia in env
+RUN \
+  umask 022 \
+  && (mkdir "/home/user/.julia" || true) \
+  && echo '\
+    ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+    ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
+    using Pkg; \
+    Pkg.add("IJulia");' | julia
+# Start cocalc in env
+CMD ["/cocalc/init/init.sh $COCALC_PROJECT_ID"]
+
 
 
