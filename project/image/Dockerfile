@@ -58,6 +58,29 @@ WORKDIR /home/user
 
 EXPOSE 2222 6000 6001
 
+RUN \
+  umask 022 \
+  && (mkdir "/home/user/.julia" || true) \
+  && echo '\
+    ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+    ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
+    using Pkg; \
+    Pkg.add("IJulia");' | julia
+#  && echo '{\
+#  "display_name": "Julia 1.5.0",\
+#  "argv": [\
+#    "/opt/julia/bin/julia",\
+#    "-i",\
+#    "--color=yes",\
+#    "--project=@.",\
+#    "/home/user/.julia/packages/IJulia/*/src/kernel.jl",\
+#    "{connection_file}"\
+#  ],\
+#  "language": "julia",\
+#  "env": {},\
+#  "interrupt_mode": "signal"\
+#}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
+
 ENTRYPOINT ["/cocalc/bin/tini", "--"]
 CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 
