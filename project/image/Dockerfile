@@ -95,7 +95,7 @@ RUN \
     using Pkg; \
     Pkg.add("IJulia");' | julia
 # Start cocalc in env
-CMD ["/cocalc/init/init.sh $COCALC_PROJECT_ID"]
+CMD /cocalc/init/init.sh $COCALC_PROJECT_ID
 
 
 
