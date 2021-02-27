@@ -12,7 +12,7 @@ RUN cd /tmp \
   && rm  -f julia-${JULIA}-linux-x86_64.tar.gz \
   && mv /opt/julia-* /opt/julia \
   && ln -s /opt/julia/bin/julia /usr/local/bin
-  
+
 # Install IJulia kernel
 #RUN echo 'using Pkg; Pkg.add("IJulia");' | julia
 #  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/"
@@ -81,8 +81,8 @@ EXPOSE 2222 6000 6001
 #  "interrupt_mode": "signal"\
 #}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
 
-#ENTRYPOINT ["/cocalc/bin/tini", "--"]
-#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
+CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 # Start sh in new environment with tini
 #RUN /cocalc/bin/tini -- env -i sh
 
@@ -91,8 +91,8 @@ EXPOSE 2222 6000 6001
 # Environment init (triggers IJulia and dependencies installation)
 #RUN ["/bin/sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID"]
 # Start cocalc in env
-ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID", "&&", "sh", "/cocalc/init/init.sh $COCALC_PROJECT_ID)"]
+#ENTRYPOINT ["/cocalc/bin/tini", "--"]
+#CMD ["sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID", "&&", "sh", "/cocalc/init/init.sh $COCALC_PROJECT_ID)"]
 
 
 
