@@ -90,11 +90,7 @@ rm -rf "$SMC" && mkdir "$SMC"
 mkdir "$HOME/.julia" || true
 
 # Install Julia and all dependencies
-echo "Before Julia init:"
-ls -al
 julia /cocalc/init/julia_init.jl
-echo "After Julia init:"
-ls -al
 
 #bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 #disown
