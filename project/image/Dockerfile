@@ -89,10 +89,10 @@ CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 # Setup env shell
 #SHELL ["/cocalc/bin/tini", "--", "sh" ,"-c"]
 # Environment init (triggers IJulia and dependencies installation)
-#RUN ["/bin/sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID"]
+RUN /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID
 # Start cocalc in env
 #ENTRYPOINT ["/cocalc/bin/tini", "--"]
-#CMD ["sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID", "&&", "sh", "/cocalc/init/init.sh $COCALC_PROJECT_ID)"]
+CMD /cocalc/init/init.sh $COCALC_PROJECT_ID
 
 
 
