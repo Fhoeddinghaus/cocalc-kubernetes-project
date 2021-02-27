@@ -89,10 +89,10 @@ EXPOSE 2222 6000 6001
 # Setup env shell
 #SHELL ["/cocalc/bin/tini", "--", "sh" ,"-c"]
 # Environment init (triggers IJulia and dependencies installation)
-RUN ["/cocalc/bin/tini", "--", "sh" ,"-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID"]
+#RUN ["/bin/sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID"]
 # Start cocalc in env
 ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c" "/cocalc/init/init.sh $COCALC_PROJECT_ID"]
+CMD ["sh", "-c", "(env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID && /cocalc/init/init.sh $COCALC_PROJECT_ID)"]
 
 
 
