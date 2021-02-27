@@ -58,14 +58,14 @@ WORKDIR /home/user
 
 EXPOSE 2222 6000 6001
 
-RUN \
-  umask 022 \
-  && (mkdir "/home/user/.julia" || true) \
-  && echo '\
-    ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-    ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
-    using Pkg; \
-    Pkg.add("IJulia");' | julia
+#RUN \
+#  umask 022 \
+#  && (mkdir "/home/user/.julia" || true) \
+#  && echo '\
+#    ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+#    ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
+#    using Pkg; \
+#    Pkg.add("IJulia");' | julia
 #  && echo '{\
 #  "display_name": "Julia 1.5.0",\
 #  "argv": [\
@@ -84,16 +84,12 @@ RUN \
 #ENTRYPOINT ["/cocalc/bin/tini", "--"]
 #CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
 # Start sh in new environment with tini
-RUN /cocalc/bin/tini -- env -i sh
-# Install IJulia in env
+#RUN /cocalc/bin/tini -- env -i sh
+
+# Environment init (triggers IJulia and dependencies installation)
 RUN \
   umask 022 \
-  && (mkdir "/home/user/.julia" || true) \
-  && echo '\
-    ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-    ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \ 
-    using Pkg; \
-    Pkg.add("IJulia");' | julia
+  && /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID
 # Start cocalc in env
 CMD /cocalc/init/init.sh $COCALC_PROJECT_ID
 
