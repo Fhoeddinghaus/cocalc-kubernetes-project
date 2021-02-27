@@ -92,7 +92,7 @@ EXPOSE 2222 6000 6001
 #RUN ["/bin/sh", "-c", "env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID"]
 # Start cocalc in env
 ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c", "(env -i /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID && /cocalc/init/init.sh $COCALC_PROJECT_ID)"]
+CMD ["sh", "/cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID", "&& sh /cocalc/init/init.sh $COCALC_PROJECT_ID)"]
 
 
 
