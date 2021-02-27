@@ -87,9 +87,7 @@ EXPOSE 2222 6000 6001
 #RUN /cocalc/bin/tini -- env -i sh
 
 # Environment init (triggers IJulia and dependencies installation)
-RUN \
-  umask 022 \
-  && /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID
+RUN /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID
 # Start cocalc in env
 CMD /cocalc/init/init.sh $COCALC_PROJECT_ID
 
