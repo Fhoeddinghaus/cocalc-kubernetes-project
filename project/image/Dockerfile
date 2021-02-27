@@ -92,8 +92,8 @@ RUN /cocalc/bin/tini -- sh -c 'env -i /cocalc/init/init.sh $COCALC_PROJECT_ID'
 # Environment init (triggers IJulia and dependencies installation)
 #RUN /cocalc/init/env_pre_init.sh $COCALC_PROJECT_ID
 # Start cocalc in env
-ENTRYPOINT []
-CMD []
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
+CMD ["sh", "-c", "exec node /cocalc/src/smc-project/local_hub.js --tcp_port 6000 --raw_port 6001"]
 #["/cocalc/bin/tini", "--"]
 #CMD /cocalc/init/init.sh $COCALC_PROJECT_ID
 
