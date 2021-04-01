@@ -5,7 +5,7 @@ USER root
 # Preparing Julia installation for later build
 
 # Install Julia
-ARG JULIA=1.5.0
+ARG JULIA=1.6.0
 RUN cd /tmp \
   && wget https://julialang-s3.julialang.org/bin/linux/x64/${JULIA%.*}/julia-${JULIA}-linux-x86_64.tar.gz \
   && tar xf julia-${JULIA}-linux-x86_64.tar.gz -C /opt \
