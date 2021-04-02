@@ -87,22 +87,18 @@ fi
 rm -rf "$SMC" && mkdir "$SMC"
 
 # Create .julia folder
-#mkdir "$HOME/.julia" || true
+mkdir "$HOME/.julia" || true
 
-# Cleanup the registry for fresh installation (at restart)
-#rm -rf "$HOME/.julia/registries" || true
+# Install Julia and all dependencies
+julia /cocalc/init/julia_init.jl
 
-# Install IJulia and all dependencies
-#julia /cocalc/init/julia_init.jl < /dev/null > /dev/stdout 2> /dev/stderr &
+#bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 #disown
 
-bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
-disown
-
-if [[ -s "$HOME/project_init.sh" ]]; then
-  bash "$HOME/project_init.sh" < /dev/null > /dev/stdout 2> /dev/stderr &
-  disown
-fi
+#if [[ -s "$HOME/project_init.sh" ]]; then
+#  bash "$HOME/project_init.sh" < /dev/null > /dev/stdout 2> /dev/stderr &
+#  disown
+#fi
 
 # nvm: use node 10 + packages for the local hub (the setup prepends something to the PATH, that's all)
 # and exec replaces the current process
@@ -112,6 +108,9 @@ date -Ins
 # 10 below is to select node version 10
 #nvm use --delete-prefix 10
 #date -Ins
-exec node /cocalc/src/smc-project/local_hub.js --tcp_port 6000 --raw_port 6001
+#exec node /cocalc/src/smc-project/local_hub.js --tcp_port 6000 --raw_port 6001
 
 
+
+
+(echo "env_pre_init.sh finished." || true)
