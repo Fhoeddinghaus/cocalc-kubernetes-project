@@ -1,1 +1,0 @@
-# Project component of cocalc-kubernetes
