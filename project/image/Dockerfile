@@ -45,9 +45,11 @@ RUN cd /tmp \
 #Pkg.init(); \
 
 # Change permissions and ownership
-#RUN \
-#     chown -R user:user /usr/local/share/.julia \
-#  && chmod -R 755 /usr/local/share/.julia 
+RUN \
+  chown -R user:user /usr/local/bin/julia \
+  && chmod -R ag+rw /usr/local/bin/julia \
+  && chown -R user:user /usr/local/share/.julia \
+  && chmod -R ag+rw /usr/local/share/.julia
 
 # Use own init script
 COPY init /cocalc/init/
@@ -80,6 +82,19 @@ EXPOSE 2222 6000 6001
 #  "env": {},\
 #  "interrupt_mode": "signal"\
 #}' > /usr/local/share/jupyter/kernels/julia-${JULIA%.*}/kernel.json
+
+RUN \
+  umask 022 \
+  && (mkdir "/home/user/.julia" || true) \
+  && chown -R user:user /home/user/.julia \
+  && chmod -R ag+rw /home/user/.julia \
+  && echo '\
+    include("/cocalc/init/julia_init.jl"); \
+    activate_global_env(); \
+    Pkg.add("IJulia"); \
+    Pkg.add(name="BenchmarkTools", version="0.7.0");' | julia \
+  && chmod -R ag+rw /home/user/.julia
+  
 
 ENTRYPOINT ["/cocalc/bin/tini", "--"]
 CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]

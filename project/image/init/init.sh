@@ -87,14 +87,14 @@ fi
 rm -rf "$SMC" && mkdir "$SMC"
 
 # Create .julia folder
-mkdir "$HOME/.julia" || true
+#mkdir "$HOME/.julia" || true
 
 # Cleanup the registry for fresh installation (at restart)
-rm -rf "$HOME/.julia/registries" || true
+#rm -rf "$HOME/.julia/registries" || true
 
 # Install IJulia and all dependencies
-julia /cocalc/init/julia_init.jl < /dev/null > /dev/stdout 2> /dev/stderr &
-disown
+#julia /cocalc/init/julia_init.jl < /dev/null > /dev/stdout 2> /dev/stderr &
+#disown
 
 bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 disown

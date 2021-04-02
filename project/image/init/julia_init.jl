@@ -59,4 +59,4 @@ function install()
     pkg"precompile"
 end
 
-install()
+#install()
