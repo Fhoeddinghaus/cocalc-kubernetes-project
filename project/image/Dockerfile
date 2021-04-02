@@ -45,9 +45,9 @@ RUN cd /tmp \
 #Pkg.init(); \
 
 # Change permissions and ownership
-RUN \
-     chown -R user:user /usr/local/share/.julia \
-  && chmod -R ag+rw /usr/local/share/.julia
+#RUN \
+#     chown -R user:user /usr/local/share/.julia \
+#  && chmod -R ag+rw /usr/local/share/.julia
 
 # Use own init script
 COPY init /cocalc/init/
