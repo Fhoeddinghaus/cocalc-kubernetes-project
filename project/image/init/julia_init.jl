@@ -28,7 +28,7 @@ function install()
     # add all pkgs with specific versions (not pinned)
     @info "Installing packages..."
     # IJulia Kernel
-    Pkg.add(IJulia)
+    Pkg.add("IJulia")
     # Other packages
     Pkg.add(name="BenchmarkTools", version="0.7.0")
     Pkg.add(name="CSV", version="0.8.4")
