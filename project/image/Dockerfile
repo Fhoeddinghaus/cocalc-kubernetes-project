@@ -94,8 +94,10 @@ RUN \
   && chmod -R ag+rw /home/user/.julia
   
 
-ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+#ENTRYPOINT ["/cocalc/bin/tini", "--"]
+#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+ENTRYPOINT [ ]
+CMD ["sh", "-c", "/cocalc/init/init.sh $COCALC_PROJECT_ID"]
 # Start sh in new environment with tini
 #RUN /cocalc/bin/tini -- env -i sh
 
