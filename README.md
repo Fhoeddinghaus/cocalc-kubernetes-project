@@ -1,8 +1,48 @@
-# cocalc-kubernetes-project
- Docker image for cocalc-kubernetes-project, expanding the sagemathinc cocalc-kubernetes-project image by Julia and IJulia and other dependencies.
+This is a fork from [sagemathinc/cocalc-kubernetes](https://github.com/sagemathinc/cocalc-kubernetes) that adds the Julia kernel to the project-image.
+This image may be used later by the CIP-staff at THP (Institute for theoretical physics) of the university cologne (UzK).
 
-The Dockerfile extends the image https://hub.docker.com/r/sagemathinc/cocalc-kubernetes-project by installing the Julia language in the Dockerfile and customizing the /init/init.sh script to execute /init/julia_init.jl.
+<hr>
 
-This image is used by the CIP-staff at THP (institute for theoretical physics) of the university cologne (UzK).
+# cocalc-kubernetes
 
-This repository is the cleaned result from what was learned in the original fork https://github.com/fhoeddinghaus/cocalc-kubernetes.
+This is a free open source AGPL licensed slightly modified version of [cocalc-docker](https://github.com/sagemathinc/cocalc-docker), but for running CoCalc on a Kubernetes cluster.  There is one pod for the server and one pod for each project.
+
+## STATUS
+
+- As of Dec 2020, we have decided that **CoCalc-Kubernetes will not be supported further until there is at least one paying customer.**  We are a small company, and must choose very carefully how we spend our time.  So far nobody has purchased Cocalc-Kubernetes, wheeas many people have purchased [cocalc-docker](https://github.com/sagemathinc/cocalc-docker) licenses, so that's where our effort is going.
+
+- I've last updated the images on DockerHub that this uses to the latest version of CoCalc as of **May 12, 2020**.
+
+## Installation
+
+See [server/README.md](./server/README.md) to get going!
+
+## LICENSE AND SUPPORT
+
+  - Much of this code is licensed [under the AGPL](https://en.wikipedia.org/wiki/Affero_General_Public_License). If you would instead like a business-friendly MIT license, please contact [help@cocalc.com](mailto:help@cocalc.com), and we will sell you a 1-year license for $1499.  This also includes some support, though with no guarantees (that costs more).
+  - Join the [CoCalc Docker mailing list](https://groups.google.com/a/sagemath.com/group/cocalc-docker) for news, updates and more.
+  - Use the [CoCalc mailing list](https://groups.google.com/forum/?fromgroups#!forum/cocalc) for general community support.
+
+## SECURITY STATUS
+
+  - If you setup everything as explained in [server/README.md](./server/README.md), including appropriate network restrictions on the project pods, then there are no known security vulnerabilities.  In particular, this is much safer to run than [cocalc-docker](https://github.com/sagemathinc/cocalc-docker), if you are going to expose this to untrusted (or uncareful) users.
+
+## Discussion
+
+cocalc-kubernetes is an open version of CoCalc that can be run on an existing generic Kubernetes cluster.
+
+It is as similar as possible to [cocalc-docker](https://github.com/sagemathinc/cocalc-docker), with the following changes:
+  1. It runs in a Kubernetes cluster rather than a plain Docker install, and
+  2. Projects run as separate pods on the cluster rather than all in the same Docker container.
+
+The benefits of this architecture include:
+  - Projects can have individual resource limitations imposed by Kubernetes.
+  - The security issues with cocalc-docker (involving projects connecting to other project services on localhost) can be addressed by blocking outgoing network connections from projects.
+  - Projects run across a cluster, so the number of projects that one can run at once is a function of the number (and size) of nodes in the cluster, rather than cocalc-docker host.
+  - This can be done with just a slight modification and addition to the entirely open source (AGPL) codebase that cocalc-docker uses.
+  
+The drawbacks of this architecture over a more complicated architecture like the closed-source KuCalc (what https://cocalc.com uses) include:
+  - It is unclear to what extent it can handle a large number of *simultaneous users*, since the entire server component (the database, hub, NFS file server, etc.) are all served from a single pod.
+  - Project storage is just a single NFS server, so disk iops may be lower for client projects, which may or may not be an issue depending on the network and use of projects.
+  - Filesystem level snapshots and other backups have to be handled outside CoCalc.  This is the responsibility of the admin and is not part of cocalc-kubernetes at present.  However, the [TimeTravel](https://doc.cocalc.com/time-travel.html) functionality, which records every version of a file or notebook while you work on it, and lets you browse all past versions, does **fully work** in cocalc-kubernetes.
+  - The project image is much more minimal than the one provided by https://cocalc.com -- it has to be small enough to reasonably run in a normal way without pull taking too long.  The image in KuCalc is hundreds of gigabytes but mounts quickly using some sophisticated tricks.
