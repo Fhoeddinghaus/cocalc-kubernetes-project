@@ -59,4 +59,20 @@ function install()
     pkg"precompile"
 end
 
+function install_minimal()
+    activate_global_env()
+
+    # add all pkgs with specific versions (not pinned)
+    @info "Installing minimal packages..."
+    # IJulia Kernel
+    Pkg.add("IJulia")
+    # Add minimal packages below, others have to be installed manually
+    # ...
+
+    # precompile
+    @info "Precompile minimal packages..."
+    pkg"precompile"
+end
+
 #install()
+install_minimal()
