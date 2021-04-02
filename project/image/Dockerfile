@@ -46,9 +46,7 @@ RUN cd /tmp \
 
 # Change permissions and ownership
 RUN \
-  chown -R user:user /usr/local/bin/julia \
-  && chmod -R ag+rw /usr/local/bin/julia \
-  && chown -R user:user /usr/local/share/.julia \
+     chown -R user:user /usr/local/share/.julia \
   && chmod -R ag+rw /usr/local/share/.julia
 
 # Use own init script
