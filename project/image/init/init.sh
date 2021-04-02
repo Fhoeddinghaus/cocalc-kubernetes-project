@@ -93,8 +93,8 @@ mkdir "$HOME/.julia" || true
 rm -rf "$HOME/.julia/registries" || true
 
 # Install IJulia and all dependencies
-julia /cocalc/init/julia_init.jl # < /dev/null > /dev/stdout 2> /dev/stderr &
-#disown
+julia /cocalc/init/julia_init.jl < /dev/null > /dev/stdout 2> /dev/stderr &
+disown
 
 bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 disown
