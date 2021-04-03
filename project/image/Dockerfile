@@ -23,7 +23,23 @@ USER user
 WORKDIR /home/user
 
 EXPOSE 2222 6000 6001
-  
 
-ENTRYPOINT ["/cocalc/bin/tini", "--"]
-CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+ENV HOME=/home/user
+
+RUN umask 000 \
+  && (mkdir -p /home/user/.julia/packages || true) \
+  && echo WorkingDir is ~ (should be $HOME) && pwd \\
+  && echo '\
+  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
+  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \
+  ENV["JULIA_DEPOT_PATH"] = "/home/user/.julia/packages"; \
+  Pkg.init(); \
+  print("Julia pwd is: "); pwd(); \
+  Pkg.add("IJulia");' | julia \
+  && ls -al
+
+ENTRYPOINT [ ]
+CMD ["sh", "-c" "/cocalc/init/init.sh $COCALC_PROJECT_ID"]  
+
+#ENTRYPOINT ["/cocalc/bin/tini", "--"]
+#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
