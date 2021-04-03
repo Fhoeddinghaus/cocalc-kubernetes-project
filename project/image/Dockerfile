@@ -33,6 +33,7 @@ RUN umask 000 \
   ENV["JUPYTER"] = "/usr/bin/jupyter"; \
   ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \
   ENV["JULIA_DEPOT_PATH"] = "/home/user/.julia/packages"; \
+  using Pkg; \
   Pkg.init(); \
   print("Julia pwd is: "); pwd(); \
   Pkg.add("IJulia");' | julia \
