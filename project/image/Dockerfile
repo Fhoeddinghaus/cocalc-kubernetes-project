@@ -28,7 +28,7 @@ ENV HOME=/home/user
 
 RUN umask 000 \
   && (mkdir -p /home/user/.julia/packages || true) \
-  && echo WorkingDir is ~ (should be $HOME) && pwd \\
+  && echo WorkingDir is ~ '('should be $HOME')' && pwd \\
   && echo '\
   ENV["JUPYTER"] = "/usr/bin/jupyter"; \
   ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \
