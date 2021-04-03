@@ -46,7 +46,7 @@ export _JAVA_OPTIONS="-Djava.io.tmpdir=$HOME/tmp -Xms64m"
 export NLTK_DATA="$EXT/data/nltk_data"
 export ISOCHRONES="$EXT/data/isochrones"
 export JUPYTER_PATH="/usr/bin/jupyter"
-export JULIA_DEPOT_PATH="$HOME/.julia:$EXT/julia/depot/"
+export JULIA_DEPOT_PATH="$HOME/.julia:/usr/share/julia:$EXT/julia/depot/"
 export ANACONDA3="$EXT/anaconda3"
 export ANACONDA5="$EXT/anaconda5"
 export NODE_ENV=production

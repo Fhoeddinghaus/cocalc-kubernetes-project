@@ -14,9 +14,14 @@ RUN cd /tmp \
   && ln -s /opt/julia/bin/julia /usr/local/bin
 
 
-
 # Use own init script
 COPY init /cocalc/init/
+
+RUN sudo mkdir -p /usr/share/julia \
+  && export JULIA_DEPOT_PATH=/usr/share/julia \
+  && julia /cocalc/init/julia_init.jl --install-min \
+  && chmod -R ag+rw /usr/share/julia
+
 
 USER user
 
@@ -26,21 +31,5 @@ EXPOSE 2222 6000 6001
 
 ENV HOME=/home/user
 
-RUN umask 000 \
-  && (mkdir -p /home/user/.julia/packages || true) \
-  && echo WorkingDir is ~ '('should be $HOME')' && pwd \\
-  && echo '\
-  ENV["JUPYTER"] = "/usr/bin/jupyter"; \
-  ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages"; \
-  ENV["JULIA_DEPOT_PATH"] = "/home/user/.julia/packages"; \
-  using Pkg; \
-  Pkg.init(); \
-  print("Julia pwd is: "); pwd(); \
-  Pkg.add("IJulia");' | julia \
-  && ls -al
-
-ENTRYPOINT [ ]
-CMD ["sh", "-c", "/cocalc/init/init.sh $COCALC_PROJECT_ID"]  
-
-#ENTRYPOINT ["/cocalc/bin/tini", "--"]
-#CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
+ENTRYPOINT ["/cocalc/bin/tini", "--"]
+CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]

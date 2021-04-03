@@ -1,6 +1,6 @@
 ENV["JUPYTER"] = "/usr/bin/jupyter";
-ENV["JULIA_PKGDIR"] = "/home/user/.julia/packages";
-ENV["JULIA_DEPOT_PATH"] = "/home/user/.julia/packages";
+#ENV["JULIA_PKGDIR"] = "/usr/share/julia/packages";
+#ENV["JULIA_DEPOT_PATH"] = "/usr/share/julia/packages";
 
 using Pkg; 
 # Install the IJulia Kernel
