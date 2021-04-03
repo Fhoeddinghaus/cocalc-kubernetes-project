@@ -20,7 +20,10 @@ COPY init /cocalc/init/
 RUN sudo mkdir -p /usr/share/julia \
   && export JULIA_DEPOT_PATH=/usr/share/julia \
   && julia /cocalc/init/julia_init.jl --install-min \
-  && chmod -R ag+rw /usr/share/julia
+  && chmod -R ugo+rwx /usr/share/julia \
+  && chmod -R ugo+rwx /usr/share/julia/registries/General \
+  && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \
+  && chmod -R ugo+rwx /usr/local/share/jupyter/kernels/julia-${JULIA%.*}
 
 
 USER user
