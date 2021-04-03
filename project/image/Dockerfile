@@ -39,7 +39,7 @@ RUN umask 000 \
   && ls -al
 
 ENTRYPOINT [ ]
-CMD ["sh", "-c" "/cocalc/init/init.sh $COCALC_PROJECT_ID"]  
+CMD ["sh", "-c", "/cocalc/init/init.sh $COCALC_PROJECT_ID"]  
 
 #ENTRYPOINT ["/cocalc/bin/tini", "--"]
 #CMD ["sh", "-c", "env -i /cocalc/init/init.sh $COCALC_PROJECT_ID"]
