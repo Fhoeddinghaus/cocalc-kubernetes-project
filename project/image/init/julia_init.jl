@@ -118,7 +118,7 @@ if size(ARGS, 1) == 1
         @info "Making full install (IJulia and all packages)"
         install()
     elseif cmd == "--install-min"
-        @print "Making minimal install (IJulia and minimal packages)"
+        @info "Making minimal install (IJulia and minimal packages)"
         install_minimal()
     elseif cmd == "--install-non-min"
         @info "Installing non minimal packages"
