@@ -87,7 +87,7 @@ fi
 rm -rf "$SMC" && mkdir "$SMC"
 
 # Create .julia folder
-mkdir "$HOME/.julia" || true
+#mkdir "$HOME/.julia" || true
 
 # Cleanup the registry for fresh installation (at restart)
 #rm -rf "$HOME/.julia/registries" || true
