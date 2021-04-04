@@ -15,6 +15,9 @@ RUN cd /tmp \
 # Use own init script
 COPY init /cocalc/init/
 
+# Install necessary python package
+RUN pip3 install xlrd
+
 
 # Installs necessary packages (and IJulia) systemwide into /usr/share/julia
 RUN sudo mkdir -p /usr/share/julia \
