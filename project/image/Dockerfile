@@ -2,9 +2,7 @@ FROM sagemathinc/cocalc-kubernetes-project
 
 USER root
 
-# Preparing Julia installation for later build
-
-# Install Julia
+# Installs Julia
 ARG JULIA=1.6.0
 RUN cd /tmp \
   && wget https://julialang-s3.julialang.org/bin/linux/x64/${JULIA%.*}/julia-${JULIA}-linux-x86_64.tar.gz \
@@ -17,9 +15,11 @@ RUN cd /tmp \
 # Use own init script
 COPY init /cocalc/init/
 
+
+# Installs necessary packages (and IJulia) systemwide into /usr/share/julia
 RUN sudo mkdir -p /usr/share/julia \
   && export JULIA_DEPOT_PATH=/usr/share/julia \
-  && julia /cocalc/init/julia_init.jl --install-min \
+  && julia /cocalc/init/julia_init.jl --install \
   && chmod -R ugo+rwx /usr/share/julia \
   && chmod -R ugo+rwx /usr/share/julia/registries/General \
   && mv -i "$HOME/.local/share/jupyter/kernels/julia-${JULIA%.*}" "/usr/local/share/jupyter/kernels/" \

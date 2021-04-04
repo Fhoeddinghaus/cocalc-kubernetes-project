@@ -86,18 +86,6 @@ fi
 # files about the local hub and other daemons are stored.
 rm -rf "$SMC" && mkdir "$SMC"
 
-# Create .julia folder
-#mkdir "$HOME/.julia" || true
-
-# Cleanup the registry for fresh installation (at restart)
-#rm -rf "$HOME/.julia/registries" || true
-
-# Install IJulia and minimal dependencies
-#julia /cocalc/init/julia_init.jl --install-min
-# Install non-minimal dependencies
-#julia /cocalc/init/julia_init.jl --install-non-min < /dev/null > /dev/stdout 2> /dev/stderr &
-#disown
-
 bash /cocalc/kucalc-start-sshd.sh < /dev/null > /dev/stdout 2> /dev/stderr &
 disown
 
