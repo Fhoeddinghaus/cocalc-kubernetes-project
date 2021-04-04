@@ -16,7 +16,7 @@ RUN cd /tmp \
 COPY init /cocalc/init/
 
 # Install necessary python package
-RUN pip3 install xlrd
+RUN pip3 install --no-cache-dir xlrd
 
 
 # Installs necessary packages (and IJulia) systemwide into /usr/share/julia
